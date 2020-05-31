@@ -146,8 +146,7 @@ print('-'*45)
 print('\n\nPlayer 1 UP = w/ Down = s\nPlayer 2 UP = i/ Down = k\n ')
 selection = int(input('[1] == Player vs Computer\n' +
                   '[2] == Player 1 vs Player 2\n'
-                   '>>: '
-                   '-'*45   ))
+                   '>>: '  ))
 
 if selection == 1:
     players = [player2, bot]

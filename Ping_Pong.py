@@ -15,17 +15,48 @@ class Player(object):
 
     def move(self, event):
 
-        if event.type == pg.KEYDOWN:
-    
-            if event.key is self.up and (self.pos_y + 5 > 0):
-                self.pos_y -= 15
+        try:
+            if event.type == pg.KEYDOWN:
+        
+                if event.key is self.up and (self.pos_y + 5 > 0):
+                    self.pos_y -= 15
 
-            if event.key is self.down and (self.pos_y < 410):
-                self.pos_y += 15
+                if event.key is self.down and (self.pos_y < 410):
+                    self.pos_y += 15
+        except:
+            pass
 
     def position(self):
         return self.pos_x, self.pos_y, self.fill, self.size
 
+class Bot(Player):
+
+    def __init__(self, pos_x, pos_y):
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.fill = 10
+        self.size = 100
+    
+    def move(self, ball_position):
+        try:
+            self.b_y = ball_position
+            print(ball_position)
+
+            if self.b_y > 200  :
+                if self.pos_y >= 410:
+                    self.pos_y -= 5
+                else:
+                    self.pos_y += 5
+            if self.b_y < 200 :
+                if self.pos_y + 10 <= 0:
+                    self.pos_y += 5
+                else:
+                    self.pos_y -= 5
+            else:
+                if self.pos_y >= 410 or self.pos_y + 5 == 0:
+                    self.pos_y += 1
+        except:
+            pass    
 
 class Game(object):
 
@@ -87,6 +118,7 @@ class Game(object):
 
             self.ball.x += round(self.b_velx)
             self.ball.y += round(self.b_vely)
+            
 
             self.score_txt = self.sys_font.render(f'{self.player1_score}   {self.player2_score}', False, self.WHITE)
             for event in pg.event.get():
@@ -94,7 +126,7 @@ class Game(object):
                     end = True
                 self.player2.move(event)
                 self.player1.move(event)
-            
+            self.player2.move(self.ball.y)
             #Elements
             self.screen.fill(self.BLACK)
             for paddle in self.players:
@@ -105,7 +137,21 @@ class Game(object):
             pg.display.flip()
             pg.display.update()
             self.clock.tick(60)
-            
 
-players = [Player(885, 200, pg.K_i, pg.K_k), Player(0, 200, pg.K_w,  pg.K_s)]
-game = Game(players)
+bot = Bot(855, 200)
+player1 = Player(885, 200, pg.K_i, pg.K_k)
+player2 = Player(0, 200, pg.K_w, pg.K_s)
+
+print('-'*45)
+print('\n\nPlayer 1 UP = w/ Down = s\nPlayer 2 UP = i/ Down = k\n ')
+selection = int(input('[1] == Player vs Computer\n' +
+                  '[2] == Player 1 vs Player 2\n'
+                   '>>: '
+                   '-'*45   ))
+
+if selection == 1:
+    players = [player2, bot]
+    game = Game(players)
+if selection == 2:
+    players = [player2 , player1]
+    game = Game(players)

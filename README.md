@@ -19,7 +19,7 @@ O jogo foi dividido em 3 classes: Player, Bot e Game:
 
   O Bot seria uma "Inteligencia Artificial", porém com a minima quantidade de inteligencia possível. Ela é uma sub-classe de Player e sobrescreve-a
   dispensando a necessidade de receber uma tecla especificica como paramentro para a movimentação da raquete, o funcionamento dela é bem simples
-  caso a bola esteja na metade de cima da tela, ele movimenta a raquete para cima, caso contrario a raquete desce.
+  caso a bola esteja proxima ao Bot, ele movimenta a raquete para a direção da bola, caso contrário ele permanece parado
   
 ### Game
 

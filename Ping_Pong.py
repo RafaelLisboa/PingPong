@@ -19,10 +19,10 @@ class Player(object):
             if event.type == pg.KEYDOWN:
         
                 if event.key is self.up and (self.pos_y + 5 > 0):
-                    self.pos_y -= 15
+                    self.pos_y -= 25
 
                 if event.key is self.down and (self.pos_y < 410):
-                    self.pos_y += 15
+                    self.pos_y += 25
         except:
             pass
 
@@ -36,25 +36,16 @@ class Bot(Player):
         self.pos_y = pos_y
         self.fill = 10
         self.size = 100
+        self.b_y = 0
     
     def move(self, ball_position):
         try:
-            self.b_y = ball_position
-            print(ball_position)
-
-            if self.b_y > 200  :
-                if self.pos_y >= 410:
-                    self.pos_y -= 5
-                else:
-                    self.pos_y += 5
-            if self.b_y < 200 :
-                if self.pos_y + 10 <= 0:
-                    self.pos_y += 5
-                else:
-                    self.pos_y -= 5
-            else:
-                if self.pos_y >= 410 or self.pos_y + 5 == 0:
-                    self.pos_y += 1
+            self.b_x = ball_position[0]
+            self.b_y = ball_position[1]
+            if self.b_y > self.pos_y + 50 and self.b_x > 500:
+                self.pos_y += 10
+            elif self.b_y < self.pos_y and self.b_x > 500:
+                self.pos_y -= 10
         except:
             pass    
 
@@ -81,7 +72,7 @@ class Game(object):
         #Ball
         self.ball = pg.Rect(457, 257, 20, 20 )
         self.ball0 = [self.ball.x, self.ball.y]
-        self.init_ball = rd.choice ([1, -1])
+        self.init_ball = rd.choice ([2, -2])
         self.b_velx = self.init_ball+self.init_ball
         self.b_vely = self.init_ball
 
@@ -120,13 +111,13 @@ class Game(object):
             self.ball.y += round(self.b_vely)
             
 
-            self.score_txt = self.sys_font.render(f'{self.player1_score}   {self.player2_score}', False, self.WHITE)
+            self.score_txt = self.sys_font.render(f'{self.player1_score}    {self.player2_score}', False, self.WHITE)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     end = True
                 self.player2.move(event)
                 self.player1.move(event)
-            self.player2.move(self.ball.y)
+            self.player2.move([self.ball.x, self.ball.y])
             #Elements
             self.screen.fill(self.BLACK)
             for paddle in self.players:

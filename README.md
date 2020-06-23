@@ -1,3 +1,5 @@
+![GifGame](https://github.com/RafaelLisboa/PingPong/blob/master/Ping-Pong-2020-06-22-23-19-11.gif)
+
 # PingPong
 O classico Ping Pong feito em Python e totalmente orientado a objeto
 o projeto foi apenas para colocar meus aprendizado sobre o paradigma de Programação Orientada a Objetos em prática,
